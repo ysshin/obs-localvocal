@@ -35,6 +35,22 @@ if(ENABLE_QT)
                AUTORCC ON)
 endif()
 
+
+# ys todo: we should use VCPKG_ROOT instead of using hardcord folder names
+# Use vcpkg toolchain file
+set(CMAKE_TOOLCHAIN_FILE "c:/Users/shiny/work/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
+
+# Add vcpkg installed directory to CMAKE_PREFIX_PATH
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};C:/Users/shiny/work/vcpkg/installed/x64-windows")
+
+# Find OpenSSL
+find_package(OpenSSL REQUIRED)
+
+# Include directories
+include_directories(${OPENSSL_INCLUDE_DIR})
+
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+
 set(USE_SYSTEM_CURL
     OFF
     CACHE STRING "Use system cURL")
